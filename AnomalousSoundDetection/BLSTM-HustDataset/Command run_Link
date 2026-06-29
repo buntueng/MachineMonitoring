@@ -1,0 +1,5 @@
+Command run
+for model in lstm bilstm solve_bilstm; do python3 /home/bt/Desktop/Jin/Model/combined_runner.py --model $model --data_dir "/home/bt/Desktop/Jin/Processed_Data"; done
+
+Link dataset 
+https://data.mendeley.com/datasets/cbv7jyx4p9/3
