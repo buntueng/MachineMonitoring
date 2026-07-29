@@ -1,0 +1,126 @@
+project:
+  name: cross_domain_systematic_drift_detection
+  experiment_version: manuscript_v2
+  seed_list: [42, 52, 62, 72, 82]
+  deterministic: true
+
+experiment:
+  profile: manuscript
+  prevent_duplicate_runs: true
+  force_rerun: false
+  evaluate_natural_gas: true
+  evaluate_native_skab: true
+  save_representative_scores: true
+  bootstrap_repetitions: 2000
+  confidence_level: 0.95
+
+data:
+  window_size: 32
+  stride: 4
+  gas:
+    train_batches: [1, 2]
+    validation_batch: 3
+    controlled_test_batches: [3, 4]
+    validation_fraction_within_batch: 0.30
+    natural_test_batches: [5, 6, 7, 8, 9, 10]
+    residualize_context: true
+    ridge_alpha: 1.0
+  skab:
+    train_fraction: 0.60
+    validation_fraction: 0.20
+  fault_injection:
+    enabled_faults: [additive, proportional, gradual, noise, stuck, common_mode]
+    main_event_count: 6
+    main_target_anomaly_fraction: 0.10
+    main_min_severity: 0.75
+    main_max_severity: 2.50
+    channel_fraction_min: 0.08
+    channel_fraction_max: 0.30
+    scenario_grid:
+      quick:
+        severities: [1.0, 2.0]
+        duration_windows: [1, 4]
+        replicates: 1
+      manuscript:
+        severities: [0.5, 1.0, 2.0, 3.0]
+        duration_windows: [1, 2, 4, 8]
+        replicates: 3
+      channel_fractions: [0.10, 0.25, 0.50]
+      normalized_start_min: 0.05
+      normalized_start_max: 0.85
+
+training:
+  epochs: 30
+  batch_size: 128
+  learning_rate: 0.001
+  weight_decay: 0.00001
+  patience: 7
+  num_workers: 0
+  threshold:
+    primary_method: quantile
+    primary_quantile: 0.99
+    quantile_grid: [0.95, 0.975, 0.99, 0.995]
+    mad_multiplier_grid: [4.0, 6.0, 8.0]
+
+baselines:
+  core_models: [PCA_SPE, IsolationForest, DenseAE, LSTMAE, ConvAE, USAD]
+  optional_sota_models: [TranAD, AnomalyTransformer, DCdetector]
+  pca_components: 20
+  isolation_forest_estimators: 300
+  deep_hidden_dim: 64
+  deep_latent_dim: 16
+  sota_epochs: 10
+  sota_epoch_steps: 30
+
+proposed:
+  name: LCAD_AE
+  hidden_dim: 32
+  dilation_rates: [1, 2, 4]
+  kernel_size: 5
+  dropout: 0.10
+  reconstruction_weight: 1.0
+  statistics_weight: 0.25
+  correlation_weight: 0.10
+  score_reconstruction_weight: 1.0
+  score_statistics_weight: 0.35
+  score_correlation_weight: 0.15
+  ablations:
+    recon_only:
+      reconstruction_weight: 1.0
+      statistics_weight: 0.0
+      correlation_weight: 0.0
+      score_reconstruction_weight: 1.0
+      score_statistics_weight: 0.0
+      score_correlation_weight: 0.0
+    recon_statistics:
+      reconstruction_weight: 1.0
+      statistics_weight: 0.25
+      correlation_weight: 0.0
+      score_reconstruction_weight: 1.0
+      score_statistics_weight: 0.35
+      score_correlation_weight: 0.0
+    recon_correlation:
+      reconstruction_weight: 1.0
+      statistics_weight: 0.0
+      correlation_weight: 0.10
+      score_reconstruction_weight: 1.0
+      score_statistics_weight: 0.0
+      score_correlation_weight: 0.15
+    full:
+      reconstruction_weight: 1.0
+      statistics_weight: 0.25
+      correlation_weight: 0.10
+      score_reconstruction_weight: 1.0
+      score_statistics_weight: 0.35
+      score_correlation_weight: 0.15
+  transfer:
+    enabled: true
+    target_normal_fractions: [0.01, 0.05, 0.10, 0.25, 1.00]
+    minimum_target_windows: 4
+    directions: [gas_to_skab, skab_to_gas]
+
+eda:
+  max_rows_for_pca: 6000
+  representative_points: 1200
+  top_channels_to_plot: 4
+  figure_dpi: 150

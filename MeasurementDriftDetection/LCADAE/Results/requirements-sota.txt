@@ -1,0 +1,3 @@
+-r requirements.txt
+# Optional published time-series anomaly-detection implementations.
+deepod>=0.4.1

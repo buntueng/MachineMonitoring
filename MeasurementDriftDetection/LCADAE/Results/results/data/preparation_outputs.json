@@ -1,0 +1,19 @@
+{
+  "gas": {
+    "benchmark": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/data/processed/benchmarks/gas_controlled.npz",
+    "natural": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/data/processed/benchmarks/gas_natural_later_batches.npz",
+    "scenario_manifest": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/data/processed/benchmarks/gas_sensor_scenario_manifest.csv",
+    "residualizer": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/data/processed/gas_context_residualizer.joblib",
+    "event_manifest": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/results/data/gas_fault_injection_manifest.csv",
+    "summary": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/results/data/gas_preparation_summary.csv"
+  },
+  "skab": {
+    "benchmark": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/data/processed/benchmarks/skab_controlled.npz",
+    "scenario_manifest": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/data/processed/benchmarks/skab_scenario_manifest.csv",
+    "scaler": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/data/processed/skab_robust_scaler.joblib",
+    "event_manifest": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/results/data/skab_fault_injection_manifest.csv",
+    "native_manifest": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/results/data/skab_native_manifest.csv",
+    "raw_summary": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/results/data/skab_raw_file_summary.csv",
+    "summary": "/home/commu10/Documents/BT/cross_domain_drift_detection_manuscript_v2/cross_domain_drift_detection/results/data/skab_preparation_summary.csv"
+  }
+}
